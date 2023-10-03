@@ -6,7 +6,11 @@ const app = express();
 // Middleware for parsing JSON data
 app.use(bodyParser.json());
 
-// Define routes for CRUD operations (to be implemented later)
+// Import your routes from routes.js
+const routes = require('./src/routes');
+
+// Use the routes in your application
+app.use('/api', routes); // Use '/api' as the base path for your API routes
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
