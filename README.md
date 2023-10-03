@@ -20,6 +20,26 @@
       2. ``sequelize init``
       3. Modify the config
       4. ``sequelize db:create``
-      5. ``npx sequelize-cli migration:generate --name create_tasks``
-      6. ``npx sequelize-cli db:migrate``
-2. 
+      5. ``npx sequelize-cli model:generate --name Task --attributes title:string,status:string,createdAt:date,updatedAt:date``
+      6. ``npx sequelize-cli migration:generate --name create_tasks``
+      7. ``npx sequelize-cli db:migrate``
+2. DB(database_development) available in MySQL with the Tasks table
+
+## Implement CRUD APIs
+
+1. Create routes and controllers for CRUD operations 
+2. Testing using Postman (For all APIs, listed only one)
+   1. API request for the /tasks route using the POST method: 
+      1. HTPP
+         ```
+         POST /tasks HTTP/1.1
+         Host: your-api-domain.com
+         Content-Type: application/json
+         ```
+      2. Request
+         ```
+         {
+         "title": "Sample Task",
+         "status": "open"
+         }
+         ```
