@@ -31,12 +31,38 @@ exports.updateTask = async (req, res) => {
     }
 };
 
-// Get all tasks with pagination (to be implemented)
+// Get all tasks with pagination
 exports.getAllTasks = async (req, res) => {
-    // Implement pagination logic here
+    const page = req.query.page || 1; // Get the requested page number from the query parameters
+    const perPage = req.query.perPage || 10; // Number of tasks per page
+
+    try {
+        const tasks = await Task.findAll({
+            limit: perPage,
+            offset: (page - 1) * perPage, // Calculate the offset based on the page number
+        });
+
+        res.status(200).json(tasks);
+    } catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
 };
 
 // Delete a task by ID
 exports.deleteTask = async (req, res) => {
-    // Implement delete logic here
+    const taskId = req.params.id; // Get the task ID from the URL parameters
+
+    try {
+        const task = await Task.findByPk(taskId);
+
+        if (!task) {
+            return res.status(404).json({ error: 'Task not found' });
+        }
+
+        await task.destroy(); // Delete the task
+
+        res.status(204).send(); // Respond with a 204 No Content status on successful deletion
+    } catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
 };
